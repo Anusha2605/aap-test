@@ -1,0 +1,28 @@
+---
+- name: Setup Nginx Web Server on RHEL 9
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update package manager cache
+      yum:
+        name: "*"
+        state: latest
+
+    - name: Install Nginx
+      yum:
+        name: nginx
+        state: present
+
+    - name: Start and enable Nginx service
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Verify Nginx is running
+      uri:
+        url: "http://localhost"
+        status_code: 200
+      register: nginx_status
+      retries: 3
+      delay: 2
