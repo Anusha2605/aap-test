@@ -1,26 +1,26 @@
 ---
 - name: Setup Nginx Web Server on RHEL 9
   hosts: all
-  become: yes
+  become: true
   tasks:
     - name: Update package manager cache
-      yum:
+      ansible.builtin.yum:
         name: "*"
         state: latest
 
     - name: Install Nginx
-      yum:
+      ansible.builtin.yum:
         name: nginx
         state: present
 
     - name: Start and enable Nginx service
-      systemd:
+      ansible.builtin.systemd:
         name: nginx
         state: started
-        enabled: yes
+        enabled: true
 
     - name: Verify Nginx is running
-      uri:
+      ansible.builtin.uri:
         url: "http://localhost"
         status_code: 200
       register: nginx_status
