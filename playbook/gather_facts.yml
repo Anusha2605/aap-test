@@ -1,0 +1,20 @@
+---
+- name: Gather system facts
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Display hostname
+      ansible.builtin.debug:
+        msg: "Hostname: {{ ansible_hostname }}"
+
+    - name: Display OS family
+      ansible.builtin.debug:
+        msg: "OS Family: {{ ansible_os_family }}"
+
+    - name: Display IP address
+      ansible.builtin.debug:
+        msg: "IP Address: {{ ansible_default_ipv4.address }}"
+
+    - name: Display all facts
+      ansible.builtin.debug:
+        var: ansible_facts
